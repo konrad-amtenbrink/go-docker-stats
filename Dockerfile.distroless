@@ -8,7 +8,7 @@ RUN go mod download
 
 COPY . ./
 
-RUN go build -o /app ./main.go
+RUN CGO_ENABLED=0 go build -o /app ./main.go
 
 FROM gcr.io/distroless/static AS final
 LABEL maintainer="konrad.amtenbrink"
@@ -16,4 +16,6 @@ USER nonroot:nonroot
 
 COPY --from=build --chown=nonroot:nonroot /app /app
 
-ENTRYPOINT ["/app"]
+EXPOSE 8080
+
+ENTRYPOINT ["app"]
