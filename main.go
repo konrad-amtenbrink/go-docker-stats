@@ -40,8 +40,7 @@ func main() {
 		h := func(w http.ResponseWriter, _ *http.Request, _ httprouter.Params) {
 			w.WriteHeader(http.StatusOK)
 		}
-		r.GET(
-			"/healthz/live", h)
+		r.GET("/healthz/live", h)
 		log.Info().Msg("initialized /healthz/live")
 	}
 
