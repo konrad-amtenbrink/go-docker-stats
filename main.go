@@ -32,7 +32,6 @@ const (
 )
 
 func main() {
-
 	r := httprouter.New()
 
 	// /healthz/live.
@@ -84,10 +83,10 @@ func shutdown(srv *http.Server) error {
 
 	if err := srv.Shutdown(ctx); err != nil {
 		if cErr := srv.Close(); cErr != nil {
-			return fmt.Errorf("closing server: %w, %w", err, cErr)
+			return fmt.Errorf("closing server: %v, %v", err, cErr)
 		}
 
-		return fmt.Errorf("shutting down server: %w", err)
+		return fmt.Errorf("shutting down server: %v", err)
 	}
 
 	return nil
