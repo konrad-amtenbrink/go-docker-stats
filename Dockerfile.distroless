@@ -1,0 +1,19 @@
+FROM golang:1.21-alpine as build
+
+WORKDIR /src
+COPY go.mod go.sum ./
+
+RUN apk add --no-cache git
+RUN go mod download
+
+COPY . ./
+
+RUN go build -o /app ./main.go
+
+FROM gcr.io/distroless/static AS final
+LABEL maintainer="konrad.amtenbrink"
+USER nonroot:nonroot
+
+COPY --from=build --chown=nonroot:nonroot /app /app
+
+ENTRYPOINT ["/app"]
